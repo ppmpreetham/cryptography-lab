@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 
 // stubs (get actual code from lab-4)
 uint8_t encrypt(uint8_t pt, uint16_t key);
