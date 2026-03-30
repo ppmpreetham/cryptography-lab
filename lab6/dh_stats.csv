@@ -1,0 +1,13 @@
+role,key_gen_ns,mod_exp_ns,kdf_ns,encrypt_ns,decrypt_ns,msg_len
+server,12343,1163,551,430,641,83
+client,6452,1202,521,501,611,83
+server,13616,1322,751,611,661,83
+client,6152,1122,742,622,1052,83
+client,0,21340,1322,2455,0
+server,1,1493,1293,1934,0
+client,0,13947,1102,801,0
+server,1,1182,1243,1913,0
+server,1,0,380,2305,3
+server,1,0,772,992,0
+server,1,0,642,1042,2
+server,1,0,491,2374,1
