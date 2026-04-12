@@ -37,8 +37,8 @@ ll totient(ll n){
 // very similar to gcd
 ll egcd(ll a, ll b, ll *x, ll *y){
     if (b==0){
-        x = 1;
-        y = 0;
+        *x = 1;
+        *y = 0;
         return a;
     }
     ll x1, y1;
@@ -51,7 +51,7 @@ ll egcd(ll a, ll b, ll *x, ll *y){
 // ax = 1 mod(m)
 ll modinv(ll a, ll m){
     ll x,y;
-    ll g = egcd(a, m, x, y);
+    ll g = egcd(a, m, &x, &y);
     if (g!=1) return -1; // sentinels of pharloom
     return (x % m + m) % m; // you prolly see this everywhere by now bro, if you dont youll hate negs coming up in your code 
 }
@@ -73,6 +73,7 @@ ll crt(ll *r, ll *m, int k) {
     return (result + M) % M;
 }
 
+// TODO
 bool miller_rabin(ll n);
 
 // 7 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -115,6 +116,6 @@ void homo(ll c1a, ll c2a, ll c1b, ll c2b,
     *c2 = mulmod(c2a, c2b, p);
 }
 
-ll eval_poly(ll coeffs[], int k, ll x, ll mod);
-ll lagrange(ll x[], ll y[], int k, ll mod);
+ll eval_poly(ll coeffs[], int k, ll x, ll mod); // TODO
+ll lagrange(ll x[], ll y[], int k, ll mod); // TODO
 char shift_char(char c, int k);  // Caesar
