@@ -8,25 +8,25 @@
 #define K 2   // threshold
 
 int main(){
-    int s=socket(2,1,0),c[N];
+    int s=socket(2,1,0), c[N];
     struct sockaddr_in a={2,htons(PORT),0};
-
     bind(s,(void*)&a,16); listen(s,N);
+
 
     for(int i=0;i<N;i++) c[i]=accept(s,0,0);
 
-    ll mod=97;
+    ll p=97;
     ll secret=45;
 
     // polynomial coeffs: c0=secret
     ll coeffs[K];
     coeffs[0]=secret;
-    for(int i=1;i<K;i++) coeffs[i]=rand()%mod;
+    for(int i=1;i<K;i++) coeffs[i]=rand()%p;
 
     // send shares
     for(int i=0;i<N;i++){
         ll x=i+1;
-        ll y=eval_poly(coeffs,K,x,mod);
+        ll y=eval_poly(coeffs,K,x,p);
 
         W_INT(c[i],x);
         W_INT(c[i],y);
@@ -39,7 +39,7 @@ int main(){
         R_INT(c[i],ys[i]);
     }
 
-    ll rec = lagrange(xs,ys,K,mod);
+    ll rec = lagrange(xs,ys,K,p);
     printf("Reconstructed: %lld\n",rec);
 
     for(int i=0;i<N;i++) close(c[i]);
