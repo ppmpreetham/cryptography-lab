@@ -51,35 +51,27 @@ int main(){
     int b[1024];
     bind(s, (struct sockaddr*)&a, 16);
     listen(s, 5);
-    printf("[SERVER] Waiting for connection...\n"); fflush(stdout);
     c = accept(s, 0, 0);
-    printf("[SERVER] Client connected\n"); fflush(stdout);
-    
-    int p = 3, q = 11;
+
+    int p = 3;
+    int q = 11;
     int n_val = p*q;
     int tot = totient(n_val);
     int e = 7;
-    printf("[SERVER] p=%d q=%d n=%d tot=%d e=%d\n", p, q, n_val, tot, e); fflush(stdout);
-    
-    if (gcd(e, tot) != 1) printf("[SERVER] ERROR: bad e\n");
-    
-    int d = modinv(e, tot);
-    printf("[SERVER] d=%d\n", d); fflush(stdout);
-    
-    printf("[SERVER] Sending e=%d n=%d\n", e, n_val); fflush(stdout);
-    W_INT(c, e);
-    W_INT(c, n_val);
-    printf("[SERVER] Sent. Entering receive loop...\n"); fflush(stdout);
-    
-    while(1){
-        int enc;
-        printf("[SERVER] Waiting for encrypted value...\n"); fflush(stdout);
-        int r = read(c, &enc, sizeof(enc));
-        printf("[SERVER] read() returned %d bytes\n", r); fflush(stdout);
-        if(r <= 0){ printf("[SERVER] Connection closed or error\n"); fflush(stdout); break; }
-        enc = ntohl(enc);
-        printf("[SERVER] Received enc=%d\n", enc); fflush(stdout);
-        int dec = modexp(enc, d, n_val);
-        printf("[SERVER] Decrypted: %d\n", dec); fflush(stdout);
+
+    if (gcd(e, tot) != 1){
+        printf("not right e");
     }
+
+    int d = modinv(e, tot);
+    W_INT(c,e);
+    W_INT(c,n_val);
+    int enc;
+    while (1){
+        R_INT(c, enc);
+        break;
+    }
+
+    int dec = modexp(enc,d,n_val);
+    printf("%d\n", dec);
 }

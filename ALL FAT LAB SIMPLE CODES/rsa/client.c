@@ -48,29 +48,17 @@ int modexp(int a, int b, int p){
 
 int main(){
     int s = socket(2,1,0), c, n;
-    struct sockaddr_in a;
-    a.sin_family = AF_INET;
-    a.sin_port = htons(8080);
-    a.sin_addr.s_addr = inet_addr("127.0.0.1");
-    
-    printf("[CLIENT] Connecting...\n"); fflush(stdout);
-    int r = connect(s, (struct sockaddr*)&a, 16);
-    printf("[CLIENT] connect() returned %d\n", r); fflush(stdout);
-    
+    struct sockaddr_in a = {2,htons(8080),0};
+    int b[1024];
+    connect(s, (struct sockaddr*)&a, 16);
     int e, n_val;
     R_INT(s, e);
-    printf("[CLIENT] Received e=%d\n", e); fflush(stdout);
     R_INT(s, n_val);
-    printf("[CLIENT] Received n=%d\n", n_val); fflush(stdout);
     
     while(1){
         int m;
-        printf("[CLIENT] Enter message: "); fflush(stdout);
-        int sr = scanf("%d", &m);
-        printf("[CLIENT] scanf returned %d, m=%d\n", sr, m); fflush(stdout);
-        int enc = modexp(m, e, n_val);
-        printf("[CLIENT] Encrypting m=%d with e=%d n=%d → enc=%d\n", m, e, n_val, enc); fflush(stdout);
+        scanf("%d", &m);
+        int enc = modexp(m,e,n_val);
         W_INT(s, enc);
-        printf("[CLIENT] Sent enc=%d\n", enc); fflush(stdout);
     }
 }
