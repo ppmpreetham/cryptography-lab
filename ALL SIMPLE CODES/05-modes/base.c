@@ -123,33 +123,37 @@ void print_arr(char *label, uint8_t *arr, int n) {
 
 int main() {
     uint8_t pt[] = "HELLO";
-    int n = 5;
+    uint8_t padded[32];
+    uint8_t ct[32];
+    uint8_t out[32];
 
-    uint8_t ct[5], out[5];
+    int block = 8;
+    int n = 5;
 
     uint16_t key = 5;
     uint8_t iv = 10;
     uint8_t nonce = 20;
+    int new_len = pkcs7_pad(pt, n, block, padded);
+    
+    ecb_encrypt(pt, ct, new_len, key);
+    ecb_decrypt(ct, out, new_len, key);
+    print_arr("ECB Decrypted", out, new_len);
 
-    ecb_encrypt(pt, ct, n, key);
-    ecb_decrypt(ct, out, n, key);
-    print_arr("ECB Decrypted", out, n);
+    cbc_encrypt(pt, ct, new_len, iv, key);
+    cbc_decrypt(ct, out, new_len, iv, key);
+    print_arr("CBC Decrypted", out, new_len);
 
-    cbc_encrypt(pt, ct, n, iv, key);
-    cbc_decrypt(ct, out, n, iv, key);
-    print_arr("CBC Decrypted", out, n);
+    cfb_encrypt(pt, ct, new_len, iv, key);
+    cfb_decrypt(ct, out, new_len, iv, key);
+    print_arr("CFB Decrypted", out, new_len);
 
-    cfb_encrypt(pt, ct, n, iv, key);
-    cfb_decrypt(ct, out, n, iv, key);
-    print_arr("CFB Decrypted", out, n);
+    ofb_crypt(pt, ct, new_len, iv, key);
+    ofb_crypt(ct, out, new_len, iv, key);
+    print_arr("OFB Decrypted", out, new_len);
 
-    ofb_crypt(pt, ct, n, iv, key);
-    ofb_crypt(ct, out, n, iv, key);
-    print_arr("OFB Decrypted", out, n);
-
-    ctr_crypt(pt, ct, n, nonce, key);
-    ctr_crypt(ct, out, n, nonce, key);
-    print_arr("CTR Decrypted", out, n);
+    ctr_crypt(pt, ct, new_len, nonce, key);
+    ctr_crypt(ct, out, new_len, nonce, key);
+    print_arr("CTR Decrypted", out, new_len);
 
     return 0;
 }
