@@ -8,14 +8,10 @@
 #define SECRET_KEY 42
 
 int main(){
-    int s=socket(2,1,0),c,n;
-    struct sockaddr_in a={2,htons(PORT),0};
-
-    bind(s,(void*)&a,16);
-    listen(s,5);
+    int s=create_server(PORT),c;
 
     while(1){
-        c=accept(s,0,0);
+        c=accept_client(s);
 
         char tgt[128], msg[128];
         int sk; char id[64]; long ts;

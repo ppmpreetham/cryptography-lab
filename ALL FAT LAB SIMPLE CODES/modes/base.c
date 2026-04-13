@@ -63,7 +63,7 @@ void cfb_decrypt(uint8_t *ct, uint8_t *pt, int n, uint8_t iv, uint16_t key) {
     }
 }
 
-// ofb
+// ofb (same for enc and dec)
 void ofb_crypt(uint8_t *in, uint8_t *out, int n, uint8_t iv, uint16_t key) {
     uint8_t stream = iv;
 
@@ -73,7 +73,7 @@ void ofb_crypt(uint8_t *in, uint8_t *out, int n, uint8_t iv, uint16_t key) {
     }
 }
 
-// counter
+// counter (same for enc and dec)
 void ctr_crypt(uint8_t *in, uint8_t *out, int n, uint8_t nonce, uint16_t key) {
     for (int i = 0; i < n; i++) {
         uint8_t counter = nonce + i;

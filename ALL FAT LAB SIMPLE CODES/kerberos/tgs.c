@@ -10,21 +10,16 @@
 #define APP_PORT 9092
 
 int main(){
-    int s=socket(2,1,0),c,n;
-    struct sockaddr_in a={2,htons(PORT),0};
-
-    bind(s,(void*)&a,16);
-    listen(s,5);
+    int s=create_server(PORT),c;
 
     while(1){
-        c=accept(s,0,0);
+        c=accept_client(s);
 
         char id[64];
         R(c,id);
 
         xor_encrypt(id,strlen(id),SECRET_KEY); // decode
 
-        // build tgt = "sk|id|ts"
         char tgt[128];
         sprintf(tgt,"%d|%s|%ld",SESSION_KEY,id,time(0));
 
