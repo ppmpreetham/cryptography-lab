@@ -9,9 +9,6 @@
 #define W_INT(fd, x) { int t = htonl(x); write(fd, &t, sizeof(t)); }
 #define R_INT(fd, x) { int t; read(fd, &t, sizeof(t)); x = ntohl(t); }
 
-#define W_STR(fd, s) { int l = strlen(s), t = htonl(l); write(fd, &t, 4); write(fd, s, l); }
-#define R_STR(fd, b) { int l, t; read(fd, &t, 4); l = ntohl(t); read(fd, b, l); b[l] = 0; }
-
 int main(){
     int s = socket(2,1,0), n;
     struct sockaddr_in a = {2, htons(8080), inet_addr("127.0.0.1")};
