@@ -86,3 +86,70 @@ void ctr_crypt(uint8_t *in, uint8_t *out, int n, uint8_t nonce, uint16_t key) {
         xorBlocks(&out[i], in[i], k);
     }
 }
+
+int pkcs7_pad(uint8_t *in, int len, int block_size, uint8_t *out) {
+    int pad = block_size - (len % block_size);
+    int new_len = len + pad;
+
+    for (int i = 0; i < len; i++)
+        out[i] = in[i];
+
+    for (int i = len; i < new_len; i++)
+        out[i] = pad;
+
+    return new_len;
+}
+
+int pkcs7_unpad(uint8_t *in, int len) {
+    int pad = in[len - 1];
+
+    if (pad <= 0 || pad > len)
+        return -1;
+
+    for (int i = len - pad; i < len; i++) {
+        if (in[i] != pad)
+            return -1;
+    }
+
+    return len - pad;
+}
+
+void print_arr(char *label, uint8_t *arr, int n) {
+    printf("%s: ", label);
+    for (int i = 0; i < n; i++)
+        printf("%c ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    uint8_t pt[] = "HELLO";
+    int n = 5;
+
+    uint8_t ct[5], out[5];
+
+    uint16_t key = 5;
+    uint8_t iv = 10;
+    uint8_t nonce = 20;
+
+    ecb_encrypt(pt, ct, n, key);
+    ecb_decrypt(ct, out, n, key);
+    print_arr("ECB Decrypted", out, n);
+
+    cbc_encrypt(pt, ct, n, iv, key);
+    cbc_decrypt(ct, out, n, iv, key);
+    print_arr("CBC Decrypted", out, n);
+
+    cfb_encrypt(pt, ct, n, iv, key);
+    cfb_decrypt(ct, out, n, iv, key);
+    print_arr("CFB Decrypted", out, n);
+
+    ofb_crypt(pt, ct, n, iv, key);
+    ofb_crypt(ct, out, n, iv, key);
+    print_arr("OFB Decrypted", out, n);
+
+    ctr_crypt(pt, ct, n, nonce, key);
+    ctr_crypt(ct, out, n, nonce, key);
+    print_arr("CTR Decrypted", out, n);
+
+    return 0;
+}

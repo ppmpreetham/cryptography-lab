@@ -15,7 +15,9 @@ ll rand_range(ll p){ return rand()%(p-2)+1; }
 // signature
 void sign(ll m,ll p,ll g,ll x,ll *r,ll *s){
     ll k;
-    do{ k = rand_range(p); } while(gcd(k,p-1)!=1);
+    do{ 
+        k = rand_range(p); 
+    } while(gcd(k,p-1)!=1);
 
     *r = modexp(g,k,p);
     ll kinv = modinv(k,p-1);
