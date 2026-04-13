@@ -10,6 +10,25 @@ ll modinv(ll a,ll p){ return modexp(a,p-2,p); }
 #define W_INT(fd,x) { int t=htonl(x); write(fd,&t,4); }
 #define R_INT(fd,x) { int t; read(fd,&t,4); x=ntohl(t); }
 
+int connect_to(int port){
+    int s = socket(2,1,0);
+    struct sockaddr_in a = {2, htons(port), 0};
+    connect(s,(void*)&a,sizeof(a));
+    return s;
+}
+
+int create_server(int port){
+    int s = socket(2,1,0);
+    struct sockaddr_in a = {2, htons(port), 0};
+    bind(s,(void*)&a,sizeof(a));
+    listen(s,5);
+    return s;
+}
+
+int accept_client(int s){
+    return accept(s,0,0);
+}
+
 ll eval_poly(ll c[], int k, ll x, ll p) {
     ll result = 0;
     for(int i = k-1; i >= 0; i--) {   // still start from highest

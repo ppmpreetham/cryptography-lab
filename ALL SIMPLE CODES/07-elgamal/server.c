@@ -45,7 +45,7 @@ int main(){
     W_INT(c,p); W_INT(c,g); W_INT(c,y);
 
     while(1){
-        // -------- NORMAL --------
+        // NORMAL
         ll c1,c2;
         if(read(c,&c1,0)<=-1) break;
 
@@ -53,7 +53,7 @@ int main(){
         ll m = decrypt(c1,c2,p,x);
         printf("Normal: %lld\n",m);
 
-        // -------- HOMO --------
+        // HOMO
         ll c1a,c2a,c1b,c2b;
         R_INT(c,c1a); R_INT(c,c2a);
         R_INT(c,c1b); R_INT(c,c2b);

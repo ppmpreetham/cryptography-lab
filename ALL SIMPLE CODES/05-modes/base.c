@@ -1,9 +1,14 @@
 #include <stdio.h>
 #include <stdint.h>
 
-// stubs (get actual code from lab-4)
-uint8_t encrypt(uint8_t pt, uint16_t key);
-uint8_t decrypt(uint8_t ct, uint16_t key);
+// stubs (for lab fat)
+uint8_t encrypt(uint8_t pt, uint16_t key){
+    return pt ^ (uint8_t)key;
+}
+
+uint8_t decrypt(uint8_t ct, uint16_t key){
+    return ct ^ (uint8_t)key;
+}
 
 void xorBlocks(uint8_t *out, uint8_t a, uint8_t b) {
     *out = a ^ b;

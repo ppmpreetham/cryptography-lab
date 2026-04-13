@@ -6,7 +6,6 @@
 int main(){
     int s=socket(2,1,0),n;
     struct sockaddr_in a={2,htons(8080),inet_addr("127.0.0.1")};
-
     connect(s,(void*)&a,16);
 
     ll p,g,y;

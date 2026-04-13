@@ -8,12 +8,8 @@
 #define K 2   // threshold
 
 int main(){
-    int s=socket(2,1,0), c[N];
-    struct sockaddr_in a={2,htons(PORT),0};
-    bind(s,(void*)&a,16); listen(s,N);
-
-
-    for(int i=0;i<N;i++) c[i]=accept(s,0,0);
+    int s = create_server(PORT), c[N];
+    for(int i=0;i<N;i++) c[i]=accept_client(s);
 
     ll p=97;
     ll secret=45;

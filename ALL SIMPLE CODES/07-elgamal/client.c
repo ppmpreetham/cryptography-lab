@@ -31,7 +31,7 @@ int main(){
     R_INT(s,p); R_INT(s,g); R_INT(s,y);
 
     while(1){
-        // -------- NORMAL --------
+        // NORMAL
         ll m,c1,c2;
         printf("m: ");
         scanf("%lld",&m);
@@ -39,7 +39,7 @@ int main(){
         encrypt(m,p,g,y,&c1,&c2);
         W_INT(s,c1); W_INT(s,c2);
 
-        // -------- HOMO --------
+        // HOMO
         ll m1,m2,c1a,c2a,c1b,c2b;
         printf("m1 m2: ");
         scanf("%lld %lld",&m1,&m2);
